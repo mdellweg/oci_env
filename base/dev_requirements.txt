@@ -3,4 +3,5 @@ ipdb
 epdb
 py-spy
 pydevd_pycharm
+hupper
 django-extensions

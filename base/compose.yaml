@@ -12,6 +12,8 @@ services:
     image: "localhost/oci_env/pulp:base"
     cap_add:
       - SYS_PTRACE
+      - SETUID
+      - SETGID
     env_file:
       - "{OCI_ENV_DIR}/.compiled/{COMPOSE_PROJECT_NAME}/combined.env"
       - "{OCI_ENV_CONFIG_FILE}"
