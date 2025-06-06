@@ -5,13 +5,6 @@ declare PROJECT="${PACKAGE//-/_}"
 
 set -e
 
-if [[ ${PACKAGE} == "pulp_file" || ${PACKAGE} == "pulp_certguard" ]]
-then
-    declare PACKAGE="pulpcore"
-fi
-
-cd "/src/${PACKAGE}/"
-
 function check_pytest () {
     sudo -u pulp -E type pytest || {
         cat << EOF

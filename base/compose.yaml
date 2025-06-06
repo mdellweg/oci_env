@@ -1,19 +1,14 @@
 ---
 services:
-  _base:
+  pulp:
     build:
       context: "{OCI_ENV_DIR}/base/"
       dockerfile: "Dockerfile"
     image: "localhost/oci_env/pulp:base"
-    # workaround for pulp service hanging while waiting for _base to be on running state
-    entrypoint: "/bin/sleep 1"
-
-  pulp:
-    image: "localhost/oci_env/pulp:base"
     cap_add:
-      - SYS_PTRACE
-      - SETUID
-      - SETGID
+      - "SYS_PTRACE"
+      - "SETUID"
+      - "SETGID"
     env_file:
       - "{OCI_ENV_DIR}/.compiled/{COMPOSE_PROJECT_NAME}/combined.env"
       - "{OCI_ENV_CONFIG_FILE}"
@@ -28,23 +23,19 @@ services:
       - "NGINX_PORT={NGINX_PORT}"
       - "NGINX_SSL_PORT={NGINX_SSL_PORT}"
       - "COMPOSE_PROJECT_NAME={COMPOSE_PROJECT_NAME}"
-      - S6_BEHAVIOUR_IF_STAGE2_FAILS=0
+      - "S6_BEHAVIOUR_IF_STAGE2_FAILS=0"
 
     ports:
       - "{API_PORT}:{NGINX_PORT}"
-    depends_on:
-      - _base
     volumes:
       - "{SRC_DIR}:/src:z"
       - "{OCI_ENV_DIR}:/opt/oci_env:z"
-      - "oci_pulp:/var/lib/pulp"
-      - "oci_redis_data:/data"
-      - "oci_pg_data:/var/lib/pgsql"
+      - "pulp:/var/lib/pulp"
+      - "redis_data:/data"
+      - "pg_data:/var/lib/pgsql"
 
 volumes:
-  oci_pulp:
-    name: "{COMPOSE_PROJECT_NAME}_pulp"
-  oci_pg_data:
-    name: "{COMPOSE_PROJECT_NAME}_pg_data"
-  oci_redis_data:
-    name: "{COMPOSE_PROJECT_NAME}_redis_data"
+  pulp:
+  pg_data:
+  redis_data:
+...
