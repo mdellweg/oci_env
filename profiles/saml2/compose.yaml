@@ -12,6 +12,7 @@ services:
       SP_ENTITY_ID: "https://pulp/saml2/metadata/"
       SP_ACS_LOCATION: "https://pulp/saml2/acs/"
       IDP_USER_GROUPS: "file_admin"
+      IDP_USER_CUSTOM_ATTRIBUTES: '{idp_user_attributes}'
   browser:
     build:
       dockerfile: "../../profiles/saml2/browser.Containerfile"
